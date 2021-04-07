@@ -79,31 +79,22 @@ J = reg + unreg;
 
 for k=1:m
     %forward propagation
-    
     a1 = X(k,:);
     
     z2 = Theta1*a1';
     a2 = sigmoid(z2);
-    
-    z2 = [1; z2];
-    a2 = [1; a2];
+    a2 = [ones(m,1) a2'];
 
-    z3 = Theta2*a2;
+    z3 = Theta2*a2';
     a3 = sigmoid(z3);
     h = a3;
     
     %backpropagation
     delta3= a3- yk(:,k);
-    delta2 = (Theta2' * delta3) .* sigmoidGradient(z2);
-    delta2 = delta2(2:end);
-    
-    %gradient
-    Theta2_grad = Theta2_grad + delta3*a2';
-    Theta1_grad = Theta1_grad + delta2*a1;
-    
-    
-  
+    delta2 = (Theta2' * delta3) .* sigmoidG
 end
+
+
 
 % Part 3: Implement regularization with the cost function and gradients.
 %
@@ -112,18 +103,6 @@ end
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
-    Theta1_grad(:, 1) = Theta1_grad(:, 1) ./ m;
-	Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) ./ m + ((lambda/m) * Theta1(:, 2:end));
-	
-	
-	Theta2_grad(:, 1) = Theta2_grad(:, 1) ./ m;
-	Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) ./ m + ((lambda/m) * Theta2(:, 2:end));
-
-
-
-    grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
-
 
 
 
